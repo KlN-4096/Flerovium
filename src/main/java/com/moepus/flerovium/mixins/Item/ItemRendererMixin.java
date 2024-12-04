@@ -4,7 +4,7 @@ import com.moepus.flerovium.functions.FastSimpleBakedModel;
 import com.moepus.flerovium.functions.FastSimpleBakedModelRenderer;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import net.caffeinemc.mods.sodium.api.vertex.buffer.VertexBufferWriter;
+import me.jellysquid.mods.sodium.client.model.vertex.buffer.VertexBufferWriter;
 import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.client.resources.model.BakedModel;

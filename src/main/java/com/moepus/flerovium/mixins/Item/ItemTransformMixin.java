@@ -2,8 +2,8 @@ package com.moepus.flerovium.mixins.Item;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.renderer.block.model.ItemTransform;
-import org.joml.Vector3f;
-import org.joml.Math;
+import repack.joml.Vector3f;
+import repack.joml.Math;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -12,8 +12,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import static net.minecraftforge.common.util.TransformationHelper.quatFromXYZ;
 import com.moepus.flerovium.functions.MatrixStuff;
+
+import static net.minecraftforge.common.model.TransformationHelper.quatFromXYZ;
 
 @Mixin(ItemTransform.class)
 public abstract class ItemTransformMixin {
