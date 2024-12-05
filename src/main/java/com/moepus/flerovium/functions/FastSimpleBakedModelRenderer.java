@@ -12,10 +12,10 @@ import net.minecraft.client.color.item.ItemColors;
 import net.minecraft.client.renderer.block.model.BakedQuad;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
-import org.joml.Math;
-import org.joml.Matrix3f;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
+import repack.joml.Math;
+import repack.joml.Matrix3f;
+import repack.joml.Matrix4f;
+import repack.joml.Vector3f;
 import org.lwjgl.system.MemoryStack;
 import org.lwjgl.system.MemoryUtil;
 

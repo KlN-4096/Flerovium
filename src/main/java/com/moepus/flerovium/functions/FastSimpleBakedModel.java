@@ -10,7 +10,6 @@ import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.SimpleBakedModel;
 import net.minecraft.core.Direction;
 import net.minecraft.util.RandomSource;
-import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
@@ -22,27 +21,27 @@ public class FastSimpleBakedModel implements BakedModel {
 
     private SimpleBakedModel model;
 
-    public FastSimpleBakedModel(SimpleBakedModel model, ItemTransforms transforms, ItemDisplayContext itemDisplayContext, PoseStack.Pose pose) {
+    public FastSimpleBakedModel(SimpleBakedModel model, ItemTransforms transforms, ItemTransforms.TransformType transformType, PoseStack.Pose pose) {
         this.model = model;
         for (Direction direction : Direction.values()) {
             face[direction.ordinal()] = false;
         }
-        DecideCull(transforms, itemDisplayContext, pose);
+        DecideCull(transforms, transformType, pose);
     }
 
-    private void DecideCull(ItemTransforms transforms, ItemDisplayContext itemDisplayContext, PoseStack.Pose pose) {
-        if (itemDisplayContext == ItemDisplayContext.GUI) { // In GUI
-            if (transforms.gui == ItemTransform.NO_TRANSFORM) { // Item
+    private void DecideCull(ItemTransforms transforms, ItemTransforms.TransformType transformType, PoseStack.Pose pose) {
+        if (transformType == ItemTransforms.TransformType.GUI) { // In GUI
+            if (transforms.getTransform(transformType) == ItemTransform.NO_TRANSFORM) { // Item
                 if (pose.pose().m20() == 0 && pose.pose().m21() == 0) { // Not per-transformed
                     face[Direction.SOUTH.ordinal()] = true;
                     return;
                 }
-            } else if (transforms.gui.rotation.equals(30.0F, 225.0F, 0.0F)) { // Block
+            } else if (transforms.getTransform(transformType).rotation.equals(30.0F, 225.0F, 0.0F)) { // Block
                 face[Direction.UP.ordinal()] = true;
                 face[Direction.NORTH.ordinal()] = true;
                 face[Direction.EAST.ordinal()] = true;
                 return;
-            } else if (transforms.gui.rotation.equals(30.0F, 135.0F, 0.0F)) { // Block
+            } else if (transforms.getTransform(transformType).rotation.equals(30.0F, 135.0F, 0.0F)) { // Block
                 face[Direction.UP.ordinal()] = true;
                 face[Direction.NORTH.ordinal()] = true;
                 face[Direction.WEST.ordinal()] = true;
@@ -55,8 +54,9 @@ public class FastSimpleBakedModel implements BakedModel {
             return;
         }
         // In World
-        needExtraCulling = transforms.gui.scale.x > 0.5F && pose.pose().m32() < 0;
-        if (transforms.gui == ItemTransform.NO_TRANSFORM && pose.pose().m32() < -16.0F) { // Item Far away
+        ItemTransform guiTransform = transforms.getTransform(ItemTransforms.TransformType.GUI);
+        needExtraCulling = guiTransform.scale.x > 0.5F && pose.pose().m32() < 0;
+        if (transforms.getTransform(transformType) == ItemTransform.NO_TRANSFORM && pose.pose().m32() < -16.0F) { // Item Far away
             face[Direction.NORTH.ordinal()] = true;
             face[Direction.SOUTH.ordinal()] = true;
             return;
